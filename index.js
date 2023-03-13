@@ -1,93 +1,63 @@
-let userForm = document.getElementById("user-form");
-
-const retriveEntries = () => {
-    let entries = localStorage.getItem("user-entries");
-    if (entries) {
-        entries = JSON.parse(entries);
-    } else {
-        entries = [];
-    }
-    return entries;
-}
-
-let userEntries = retriveEntries();
+<!DOCTYPE html>
+<html lang="en">
 
 
-const displayEntries = () => {
-    const entries = retriveEntries();
+      
+<head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>register</title>
+      <link rel="stylesheet" href="style.css">
+</head>
 
-    let data = entries.map((entry) => {
-        const nameCell = `<td>${entry.name}</td>`;
-        const emailCell = `<td>${entry.email}</td>`;
-        const passwordCell = `<td>${entry.password}</td>`;
-        const dobCell = `<td>${entry.dob}</td>`;
-        const acceptedTermsAndConditionsCell = `<td>${entry.acceptedTermsAndConditions}</td>`;
+      
+      <div class="outer-box" style="width: 100vw;height: 200vh;">
+      <div class="inner-box" style="margin: 1 auto; border-radius: 11px;">
+      <header class="signup-header">
+      <h1 style="background-color: pink;font-style: italic;">Registeration Form</h1>
+      </header>
+      <main class="signup-body">
 
-        const row = `<tr>${nameCell} ${emailCell} ${passwordCell} ${dobCell} ${acceptedTermsAndConditionsCell}</tr>`;
-        return row;
-    }).join("\n");
+<form id="user-form">
+      <p>
+    <label for="name">Name<span class="red">*</span> :</label>
+    <input required type="text" id="name" name="name" placeholder="enter your name here ">
+      </p>
+      <p>
+    <label for="email">Email</label>
+    <input required type="email" id="email" name="email" placeholder="enter your email here " >
+      </p>
+      <p>
+    <label for="password">Password</label>
+    <input required type="password" id="password" name="password">
+      </p>
+      <p>
+    <label for="dob">Date of Birth</label>
+    <input required type="date" id="dob" name="dob">
+      </p>
+      <p>
+    <input required  type="checkbox" id="acceptTerms" name="acceptTerms">
+    <label for="acceptTerms">Accept Terms & Conditions</label>
+      </p>
+      <p class="submit">
+    <button type="submit">Submit</button>
+    </p>
+ </form>
+</main>
+</div>
+<div class="circle c1">
 
-    let table = `<table><tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Dob</th>
-            <th>Accepted terms?</th>
-    </tr> ${data} </table>`
-    let details = document.getElementById("table");
-    details.innerHTML = table;
-}
-const saveUserForm = (event) => {
-    event.preventDefault();
+</div>
+<div class="circle c2"></div>
+<div class="entries">
+    <h3 class="center"><span>Entries</span></h3>
+    <div id="table"></div>
+</div>
+</div>
+ <div id="user-entries"></div>
+ <script src="index.js"></script>
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const dob = document.getElementById("dob").value;
-    const acceptedTermsAndConditions = document.getElementById("acceptTerms").checked;
+</body>
 
-    let currentYr = new Date().getFullYear();
-    let birthyr = dob.split("-");
-    let year = birthyr[0];
-
-    let age = currentYr - year;
-    let isValid = (age) => {
-        if (age > 55 || age < 18) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    if (!isValid(age)) {
-        document.getElementById("dob").style = "border: 2px solid red;"
-        return alert("You must be between age 18 and 55.\nYou are not elligible!");
-    } else {
-        document.getElementById("dob").style = "border: 2px solid #cccc;"
-        let entry = {
-            name,
-            email,
-            password,
-            dob,
-            acceptedTermsAndConditions
-        };
-
-        userEntries.push(entry);
-
-        localStorage.setItem("user-entries", JSON.stringify(userEntries));
-        displayEntries();
-    }
-
-
-
-}
-
-
-
-
-
-
-
-
-userForm.addEventListener("submit", saveUserForm);
-displayEntries();
+</html>
